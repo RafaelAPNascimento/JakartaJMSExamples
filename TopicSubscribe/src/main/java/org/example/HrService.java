@@ -3,9 +3,7 @@ package org.example;
 import jakarta.annotation.Resource;
 import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
-import jakarta.jms.JMSContext;
-import jakarta.jms.JMSProducer;
-import jakarta.jms.Topic;
+import jakarta.jms.*;
 import org.example.model.Employee;
 
 import java.util.logging.Logger;
@@ -21,11 +19,17 @@ public class HrService {
     @Resource(lookup = "jms/hrTopic")
     private Topic hrTopic;
 
-    public void hireEmployee(Employee employee) {
+    public void hireEmployee(Employee employee) throws JMSException {
 
         LOG.info("hiring new employee\n" + employee);
 
         JMSProducer producer = context.createProducer();
-        producer.send(hrTopic, employee);
+
+        ObjectMessage message = context.createObjectMessage();
+        message.setBooleanProperty("gender", employee.isGender());
+        message.setObject(employee);
+
+        //producer.send(hrTopic, employee);
+        producer.send(hrTopic, message);
     }
 }

@@ -26,8 +26,9 @@ public class HrServlet extends HttpServlet {
         String name = req.getParameter("name");
         int age = Integer.valueOf(req.getParameter("age"));
         double salary = Double.valueOf(req.getParameter("salary"));
+        boolean gender = Boolean.valueOf(req.getParameter("gender"));
 
-        Employee employee = Employee.builder().age(age).name(name).salary(salary).build();
+        Employee employee = Employee.builder().age(age).name(name).salary(salary).gender(gender).build();
 
         LOG.info("employee received...");
 
