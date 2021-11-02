@@ -10,7 +10,11 @@ import org.example.model.Employee;
 import java.util.logging.Logger;
 
 @MessageDriven(activationConfig = {
-        @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/hrTopic") })
+        @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/hrTopic"),
+        @ActivationConfigProperty(propertyName = "subscriptionDurability", propertyValue = "Durable"),
+        @ActivationConfigProperty(propertyName = "subscriptionName", propertyValue = "subscription1"),
+        @ActivationConfigProperty(propertyName = "clientId", propertyValue = "securityService")
+})
 public class SecurityService implements MessageListener {
 
     Logger LOG = Logger.getLogger(SecurityService.class.getName());

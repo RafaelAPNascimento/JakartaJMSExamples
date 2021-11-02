@@ -27,4 +27,8 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <finalName>hrapp</finalName>
+    </build>
+
 </project>
