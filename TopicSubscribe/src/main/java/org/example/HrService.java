@@ -19,17 +19,22 @@ public class HrService {
     @Resource(lookup = "jms/hrTopic")
     private Topic hrTopic;
 
-    public void hireEmployee(Employee employee) throws JMSException {
+    public void hireEmployee(Employee employee) {
 
         LOG.info("hiring new employee\n" + employee);
 
-        JMSProducer producer = context.createProducer();
+        try {
+            JMSProducer producer = context.createProducer();
 
-        ObjectMessage message = context.createObjectMessage();
-        message.setBooleanProperty("gender", employee.isGender());
-        message.setObject(employee);
+            ObjectMessage message = context.createObjectMessage();
+            message.setBooleanProperty("gender", employee.isGender());
+            message.setObject(employee);
 
-        //producer.send(hrTopic, employee);
-        producer.send(hrTopic, message);
+            //producer.send(hrTopic, employee);
+            producer.send(hrTopic, message);
+        }
+        catch (JMSException e) {
+            e.printStackTrace();
+        }
     }
 }
